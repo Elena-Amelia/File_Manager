@@ -1,5 +1,4 @@
 import { readFile } from "node:fs/promises";
-
 import { showError, showLocation } from "../displaying.js";
 const { createHash } = await import("node:crypto");
 

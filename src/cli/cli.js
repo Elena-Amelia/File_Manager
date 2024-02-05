@@ -6,7 +6,9 @@ import { catCommand } from "../commands/cat.js";
 import { addCommand } from "../commands/add.js";
 import { osCommand } from "../commands/os.js";
 import { hashCommand } from "../commands/hash.js";
-import { showError } from "../displaying.js";
+import { removeCommand } from "../commands/rm.js";
+import { compressCommand } from "../commands/compress.js";
+import { showError, showWrongInput } from "../displaying.js";
 
 export async function parseArgs(data) {
   const command = data.toString().trim().split(" ");
@@ -32,6 +34,10 @@ export async function parseArgs(data) {
     case "add":
       await addCommand(command[1]);
       break;
+    case "rm":
+      const rmPath = await validatePath(command.slice(1, command.length));
+      removeCommand(rmPath.join(""));
+      break;
     case "os":
       osCommand(command[1]);
       break;
@@ -39,6 +45,25 @@ export async function parseArgs(data) {
       const hashPath = await validatePath(command.slice(1, command.length));
       hashCommand(hashPath.join(""));
       break;
+    case "rn":
+      console.log("The command isn't implemented");
+      break;
+    case "cp":
+      console.log("The command isn't implemented");
+      break;
+    case "mv":
+      console.log("The command isn't implemented");
+      break;
+    case "compress":
+      // const compressPath = await validatePath(command.slice(1, command.length));
+      // compressCommand(compressPath);
+      console.log("The command isn't implemented");
+      break;
+    case "decompress":
+      console.log("The command isn't implemented");
+      break;
+    default:
+      showWrongInput();
   }
 }
 
@@ -66,6 +91,7 @@ const validatePath = async (arr) => {
         if (path1.length > 0 && path2.length === 0) {
           resolve([path1]);
         } else if (path1.length > 0 && path2.length > 0) {
+          console.log(path1, path2);
           resolve([path1, path2]);
         } else if (i === arr.length - 1 && path1.length === 0) {
           resolve([]);
