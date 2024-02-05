@@ -5,6 +5,7 @@ import { cdCommand } from "../commands/cd.js";
 import { catCommand } from "../commands/cat.js";
 import { addCommand } from "../commands/add.js";
 import { osCommand } from "../commands/os.js";
+import { hashCommand } from "../commands/hash.js";
 import { showError } from "../displaying.js";
 
 export async function parseArgs(data) {
@@ -33,6 +34,10 @@ export async function parseArgs(data) {
       break;
     case "os":
       osCommand(command[1]);
+      break;
+    case "hash":
+      const hashPath = await validatePath(command.slice(1, command.length));
+      hashCommand(hashPath.join(""));
       break;
   }
 }
