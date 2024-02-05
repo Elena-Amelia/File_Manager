@@ -11,7 +11,7 @@ import { compressCommand } from "../commands/compress.js";
 import { showError, showWrongInput } from "../displaying.js";
 
 export async function parseArgs(data) {
-  const command = data.toString().trim().split(" ");
+  const command = data.toString().split(" ");
 
   switch (command[0]) {
     case ".exit":

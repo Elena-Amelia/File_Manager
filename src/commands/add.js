@@ -4,13 +4,18 @@ import { cwd } from "node:process";
 import { showError, showLocation } from "../displaying.js";
 
 export async function addCommand(fileName) {
-  const filePath = resolve(cwd(), fileName);
-  fs.writeFile(filePath, "", (err) => {
-    if (err) {
-      showError();
-      showLocation();
-    } else {
-      showLocation();
-    }
-  });
+  try {
+    const filePath = resolve(cwd(), fileName);
+    fs.writeFile(filePath, "", (err) => {
+      if (err) {
+        showError();
+        showLocation();
+      } else {
+        showLocation();
+      }
+    });
+  } catch (err) {
+    showError();
+    showLocation();
+  }
 }
