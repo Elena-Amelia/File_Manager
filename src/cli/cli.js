@@ -4,6 +4,7 @@ import { lsCommand } from "../commands/ls.js";
 import { cdCommand } from "../commands/cd.js";
 import { catCommand } from "../commands/cat.js";
 import { addCommand } from "../commands/add.js";
+import { osCommand } from "../commands/os.js";
 import { showError } from "../displaying.js";
 
 export async function parseArgs(data) {
@@ -31,7 +32,7 @@ export async function parseArgs(data) {
       await addCommand(command[1]);
       break;
     case "os":
-      // osCommand(arr[1]);
+      osCommand(command[1]);
       break;
   }
 }
