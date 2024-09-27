@@ -10,7 +10,7 @@ rl.on("line", (data) => {
 });
 
 const userName = await getUserName();
-console.log("Welcome to the File Manager,", userName + EOL);
+console.log(`Welcome to the File Manager, ${userName}!` + EOL);
 chdir(homedir());
 showLocation();
 
@@ -29,5 +29,5 @@ process.on("SIGINT", () => {
 });
 
 process.on("exit", () =>
-  console.log("Thank you for using File Manager, " + userName + ", goodbye!")
+  console.log(`Thank you for using File Manager, ${userName}, goodbye!`)
 );

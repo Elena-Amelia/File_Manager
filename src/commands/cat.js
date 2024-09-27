@@ -1,9 +1,9 @@
-import fs from "node:fs";
+import { stat, createReadStream } from "node:fs";
 import { EOL } from "node:os";
 import { showError, showLocation } from "../displaying.js";
 
 export async function catCommand(path) {
-  fs.stat(path, (err, data) => {
+  stat(path, (err, data) => {
     if (err) {
       showError();
       showLocation();
@@ -12,12 +12,14 @@ export async function catCommand(path) {
         showError();
         showLocation();
       } else {
-        const input = fs.createReadStream(path);
+        const input = createReadStream(path);
         const output = process.stdout;
         input.pipe(output);
+        input.on("end", () => {
+          output.write(EOL);
+          showLocation();
+        });
       }
     }
   });
 }
-
-// cat C:\Users\ELENA\text.txt

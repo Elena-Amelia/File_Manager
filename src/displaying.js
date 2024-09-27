@@ -1,8 +1,9 @@
 import { cwd } from "node:process";
+import { EOL } from "node:os";
 
 export async function showLocation() {
   const path = cwd();
-  console.log("You are currently in", path);
+  console.log(EOL + "You are currently in", path + EOL);
 }
 
 export async function showError() {
@@ -10,5 +11,5 @@ export async function showError() {
 }
 
 export async function showWrongInput() {
-  console.log("Invalid input");
+  console.error("Invalid input");
 }

@@ -1,13 +1,11 @@
 import { cwd } from "node:process";
-import { resolve } from "node:path";
 import { readdir } from "node:fs/promises";
 import { showError, showLocation } from "../displaying.js";
 
 export async function lsCommand() {
   try {
-    const currentDir = resolve(cwd());
+    const currentDir = cwd();
     const files = await readdir(currentDir, { withFileTypes: true });
-
     const dataDir = [];
     const dataFile = [];
 
@@ -32,5 +30,6 @@ export async function lsCommand() {
     showLocation();
   } catch (err) {
     showError();
+    showLocation();
   }
 }

@@ -8,42 +8,40 @@ import { osCommand } from "../commands/os.js";
 import { hashCommand } from "../commands/hash.js";
 import { removeCommand } from "../commands/rm.js";
 import { compressCommand } from "../commands/compress.js";
-import { showError, showWrongInput } from "../displaying.js";
+import { showError, showLocation, showWrongInput } from "../displaying.js";
 
 export async function parseArgs(data) {
-  const command = data.toString().split(" ");
+  const command = data.toString().trim().split(" ");
+  const paths = command.slice(1).join(" ");
+  const validatedPath = await validatePath(paths);
 
   switch (command[0]) {
     case ".exit":
       process.exit();
       break;
     case "up":
-      upCommand();
+      await upCommand();
       break;
     case "ls":
-      lsCommand();
+      await lsCommand();
       break;
     case "cd":
-      const cdPath = await validatePath(command.slice(1, command.length));
-      await cdCommand(cdPath.join(""));
+      await cdCommand(validatedPath[0]);
       break;
     case "cat":
-      const catPath = await validatePath(command.slice(1, command.length));
-      await catCommand(catPath.join(""));
+      await catCommand(validatedPath[0]);
       break;
     case "add":
-      await addCommand(command[1]);
+      await addCommand(validatedPath[0]);
       break;
     case "rm":
-      const rmPath = await validatePath(command.slice(1, command.length));
-      removeCommand(rmPath.join(""));
+      await removeCommand(validatedPath[0]);
       break;
     case "os":
-      osCommand(command[1]);
+      await osCommand(command[1]);
       break;
     case "hash":
-      const hashPath = await validatePath(command.slice(1, command.length));
-      hashCommand(hashPath.join(""));
+      await hashCommand(validatedPath[0]);
       break;
     case "rn":
       console.log("The command isn't implemented");
@@ -67,37 +65,28 @@ export async function parseArgs(data) {
   }
 }
 
-const validatePath = async (arr) => {
-  return new Promise((resolve) => {
-    let path1 = "";
-    let path2 = "";
-    let result = [];
+async function validatePath(str) {
+  let hasSpace = false;
+  let paths = [];
+  let path = "";
 
-    for (let i = 0; i < arr.length; i++) {
-      result.push(arr[i]);
-
-      fs.stat(result.join(" "), (err) => {
-        if (err) {
-        } else {
-          if (path1.length === 0) {
-            path1 = result.join(" ");
-            result = [];
-          } else {
-            path2 = result.join(" ");
-            result = [];
-          }
-        }
-
-        if (path1.length > 0 && path2.length === 0) {
-          resolve([path1]);
-        } else if (path1.length > 0 && path2.length > 0) {
-          console.log(path1, path2);
-          resolve([path1, path2]);
-        } else if (i === arr.length - 1 && path1.length === 0) {
-          resolve([]);
-        }
-        // resolve([path1, path2]);
-      });
+  for (let char of str) {
+    if (char === '"' || char === "'") {
+      hasSpace = !hasSpace;
     }
-  });
-};
+
+    if (hasSpace === false) {
+      if (char === " ") {
+        paths.push(path);
+        path = "";
+      } else {
+        path += char;
+      }
+    } else {
+      path += char;
+    }
+  }
+  paths.push(path);
+  paths = paths.map((elem) => (elem = elem.replace(/\"|\'/g, "")));
+  return paths;
+}

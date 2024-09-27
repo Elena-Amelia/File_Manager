@@ -1,7 +1,7 @@
 import { chdir } from "node:process";
 import { showError, showLocation } from "../displaying.js";
 
-export function upCommand() {
+export async function upCommand() {
   try {
     chdir("..");
     showLocation();

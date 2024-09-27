@@ -4,7 +4,8 @@ import { showError, showLocation } from "../displaying.js";
 export async function removeCommand(path) {
   try {
     await fsPromises.unlink(path);
-    await showLocation();
+    console.log("The file has been deleted");
+    showLocation();
   } catch (err) {
     showError();
     showLocation();
