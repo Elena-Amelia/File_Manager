@@ -7,7 +7,11 @@ import { addCommand } from "../commands/add.js";
 import { osCommand } from "../commands/os.js";
 import { hashCommand } from "../commands/hash.js";
 import { removeCommand } from "../commands/rm.js";
+import { renameCommand } from "../commands/rn.js";
+import { copyCommand } from "../commands/cp.js";
+import { moveCommand } from "../commands/mv.js";
 import { compressCommand } from "../commands/compress.js";
+import { decompressCommand } from "../commands/decompress.js";
 import { showError, showLocation, showWrongInput } from "../displaying.js";
 
 export async function parseArgs(data) {
@@ -44,21 +48,19 @@ export async function parseArgs(data) {
       await hashCommand(validatedPath[0]);
       break;
     case "rn":
-      console.log("The command isn't implemented");
+      await renameCommand(validatedPath[0], validatedPath[1]);
       break;
     case "cp":
-      console.log("The command isn't implemented");
+      await copyCommand(validatedPath[0], validatedPath[1]);
       break;
     case "mv":
-      console.log("The command isn't implemented");
+      await moveCommand(validatedPath[0], validatedPath[1]);
       break;
     case "compress":
-      // const compressPath = await validatePath(command.slice(1, command.length));
-      // compressCommand(compressPath);
-      console.log("The command isn't implemented");
+      await compressCommand(validatedPath[0], validatedPath[1]);
       break;
     case "decompress":
-      console.log("The command isn't implemented");
+      await decompressCommand(validatedPath[0], validatedPath[1]);
       break;
     default:
       showWrongInput();

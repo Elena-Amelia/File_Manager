@@ -1,5 +1,5 @@
 import * as readline from "node:readline";
-import { chdir, stdin as input, stdout as output } from "node:process";
+import { argv, chdir, stdin as input, stdout as output } from "node:process";
 import { parseArgs } from "./cli/cli.js";
 import { showLocation } from "./displaying.js";
 import { EOL, homedir } from "node:os";
@@ -16,7 +16,8 @@ showLocation();
 
 async function getUserName() {
   let result = "Username";
-  process.argv.forEach((elem) => {
+  console.log(argv);
+  argv.forEach((elem) => {
     if (elem.startsWith("--username")) {
       result = elem.slice(elem.indexOf("=") + 1);
     }

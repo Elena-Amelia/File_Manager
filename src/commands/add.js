@@ -11,12 +11,10 @@ export async function addCommand(fileName) {
       writeFile(filePath, "", (err) => {
         if (err) throw err;
         else {
-          console.log("The file has been created");
           showLocation();
         }
       });
     } else {
-      console.log("The file already exists");
       showError();
       showLocation();
     }

@@ -1,13 +1,13 @@
-import fsPromises from "node:fs/promises";
+import { unlink } from "node:fs";
 import { showError, showLocation } from "../displaying.js";
 
 export async function removeCommand(path) {
-  try {
-    await fsPromises.unlink(path);
-    console.log("The file has been deleted");
+  unlink(path, (err) => {
+    if (err) {
+      showError();
+      showLocation();
+      return;
+    }
     showLocation();
-  } catch (err) {
-    showError();
-    showLocation();
-  }
+  });
 }
