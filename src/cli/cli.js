@@ -1,4 +1,3 @@
-import fs from "node:fs";
 import { upCommand } from "../commands/up.js";
 import { lsCommand } from "../commands/ls.js";
 import { cdCommand } from "../commands/cd.js";
@@ -12,7 +11,7 @@ import { copyCommand } from "../commands/cp.js";
 import { moveCommand } from "../commands/mv.js";
 import { compressCommand } from "../commands/compress.js";
 import { decompressCommand } from "../commands/decompress.js";
-import { showError, showLocation, showWrongInput } from "../displaying.js";
+import { showWrongInput } from "../displaying.js";
 
 export async function parseArgs(data) {
   const command = data.toString().trim().split(" ");

@@ -16,12 +16,12 @@ export async function decompressCommand(filePath, destPath) {
 
   stat(validFilePath, (err, data) => {
     if (err) {
-      // console.error("Wrong path_to_file");
+      console.error("Wrong path_to_file");
       showError();
       showLocation();
     } else {
       if (!data.isFile()) {
-        // console.error("The file to compress doesn't exist");
+        console.error("The file to compress doesn't exist");
         showError();
         showLocation();
       } else {
@@ -30,7 +30,7 @@ export async function decompressCommand(filePath, destPath) {
         const brCom = createBrotliDecompress();
         pipeline(readableStream, brCom, writeableStream, (err) => {
           if (err) {
-            // console.error("Wrong path_to_destination");
+            console.error("Wrong path_to_destination");
             showError();
             showLocation();
           } else {
