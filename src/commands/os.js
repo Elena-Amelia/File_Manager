@@ -9,7 +9,15 @@ export async function osCommand(comm) {
       showLocation();
       break;
     case "--cpus":
-      console.table(cpus());
+      let cpusTable = [];
+      cpus().forEach((elem) => {
+        cpusTable.push({
+          Model: elem.model,
+          ["Clock rate"]: (elem.speed / 1000).toFixed(1) + " GHz",
+        });
+      });
+      console.log(EOL + `Overall amount of CPUS is ${cpus().length}.`);
+      console.table(cpusTable);
       showLocation();
       break;
     case "--homedir":
