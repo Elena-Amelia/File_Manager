@@ -9,8 +9,11 @@ export async function addCommand(fileName) {
   stat(filePath, (err) => {
     if (err) {
       writeFile(filePath, "", (err) => {
-        if (err) throw err;
-        else {
+        if (err) {
+          console.error(`Operation not permitted, open ${filePath}`);
+          showError();
+          showLocation();
+        } else {
           showLocation();
         }
       });

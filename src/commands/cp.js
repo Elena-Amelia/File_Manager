@@ -2,6 +2,7 @@ import { stat, createWriteStream, createReadStream } from "node:fs";
 import { showError, showLocation, showWrongInput } from "../displaying.js";
 import { resolve, basename, join } from "node:path";
 import { removeCommand } from "./rm.js";
+import { error } from "node:console";
 
 export async function copyCommand(oldFilePath, newFileDir, isRemove = false) {
   if (!oldFilePath || !newFileDir) {
@@ -28,6 +29,11 @@ export async function copyCommand(oldFilePath, newFileDir, isRemove = false) {
           } else {
             const readableStream = createReadStream(oldFilePath);
             const writeableStream = createWriteStream(newFilePath);
+            writeableStream.on("error", () => {
+              console.error(`Operation not permitted, open ${newFilePath}`);
+              showError();
+              showLocation();
+            });
             readableStream.pipe(writeableStream);
             readableStream.on("end", () => {
               if (isRemove === true) {
