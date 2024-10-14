@@ -30,7 +30,6 @@ export async function copyCommand(oldFilePath, newFileDir, isRemove = false) {
             const readableStream = createReadStream(oldFilePath);
             const writeableStream = createWriteStream(newFilePath);
             writeableStream.on("error", () => {
-              console.error(`Operation not permitted, open ${newFilePath}`);
               showError();
               showLocation();
             });

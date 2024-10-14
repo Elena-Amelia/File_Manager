@@ -13,7 +13,7 @@ export async function osCommand(comm) {
       cpus().forEach((elem) => {
         cpusTable.push({
           Model: elem.model,
-          ["Clock rate"]: (elem.speed / 1000).toFixed(1) + " GHz",
+          ["Clock rate"]: (elem.speed / 1000).toFixed(3) + " GHz",
         });
       });
       console.log(EOL + `Overall amount of CPUS is ${cpus().length}.`);
